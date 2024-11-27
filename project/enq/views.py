@@ -5,6 +5,11 @@ def index(request):
   return render(request, 'enq/index.html')
 
 def create(request):
+  if request.method == 'POST':
+    print('---------------------------------createのPOST------------------------------------------')
+    return redirect('enq:index')
+  
+
   return render(request, 'enq/create.html')
 
 def check(request):

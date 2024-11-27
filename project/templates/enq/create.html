@@ -1,4 +1,32 @@
 {% extends 'enq/base.html' %}
 {% block content %}
-<h1>create</h1>
+
+<main>
+  <div id="input">
+    <form action="{% url 'enq:create'%}" method="post">
+      {% csrf_token %}
+    <label>質問<font color="red">*</font>: <input id="question" /></label><br />
+    形式<font color="red">*</font>:
+    <select id="format" onchange="selectDetail()">
+      <option value="選択(2択)" selected>選択(2択)</option>
+      <option value="選択(3択以上)">選択(3択以上)</option>
+      <option value="自由記述">自由記述</option>
+    </select>
+    <label>順番<font color="red">*</font>: <input type="number" /></label><br />
+    <button id="submit">登録</button>
+    </form>
+  </div>
+
+  <table>
+    <tr>
+      <th id="questionLabel">質問</th>
+      <th>形式</th>
+      <th>順番</th>
+    </tr>
+  </table>
+</main>
+{% load static %}
+<script src="{% static 'js/script.js' %}"></script>
+
+   
 {% endblock %}
