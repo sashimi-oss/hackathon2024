@@ -8,11 +8,10 @@ def create(request):
   if request.method == 'POST':
     print('---------------------------------createのPOST------------------------------------------')
     # DBに登録する処理
+    
 
-    # return redirect('enq:index')
-    return 'none'
+    return redirect('enq:create')
   
-
   return render(request, 'enq/create.html')
 
 def check(request):

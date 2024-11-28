@@ -1,0 +1,23 @@
+[
+  {
+    "model":"enq.format",
+    "fields":{
+      "format_id":1,
+      "format":"選択(2択)"
+    }
+  },
+  {
+    "model":"enq.format",
+    "fields":{
+      "format_id":2,
+      "format":"選択(3択)"
+    }
+  },
+  {
+    "model":"enq.format",
+    "fields":{
+      "format_id":3,
+      "format":"自由記述"
+    }
+  }
+]
