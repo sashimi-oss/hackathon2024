@@ -7,7 +7,10 @@ def index(request):
 def create(request):
   if request.method == 'POST':
     print('---------------------------------createのPOST------------------------------------------')
-    return redirect('enq:index')
+    # DBに登録する処理
+
+    # return redirect('enq:index')
+    return 'none'
   
 
   return render(request, 'enq/create.html')
