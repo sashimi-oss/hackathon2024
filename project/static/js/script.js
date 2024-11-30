@@ -68,7 +68,6 @@ submit.addEventListener('click', () => {
 // 形式を選択した際に起こる処理
 var i = 1;
 function selectDetail() {
-  console.log('detail-------------------------------');
   const items = document.getElementById('sd');
   if (items.hasChildNodes()) {
     for (let i = items.childNodes.length - 1; i >= 0; i--) {
@@ -79,19 +78,23 @@ function selectDetail() {
   //console.log(document.getElementById('format').value);
   if (document.getElementById('format').value == '1') {
     for (let j = 1; j <= 5; j++) {
-      const answer_item = document.createElement('input');
-      answer_item.type = 'text';
-      answer_item.name = 'answer_item' + j + '_' + i;
-      items.appendChild(answer_item);
+      const input = document.createElement('input');
+      input.type = 'text';
+      // input.name = 'item' + j + '_' + i;
+      input.name = 'item' + j;
+      console.log(input.name);
+      items.appendChild(input);
+      console.log(items);
     }
   }
 
   if (document.getElementById('format').value == '2') {
     for (let j = 1; j <= 7; j++) {
-      const answer_item = document.createElement('input');
-      answer_item.type = 'text';
-      answer_item.name = 'answer_item' + j + '_' + i;
-      items.appendChild(answer_item);
+      const input = document.createElement('input');//input再定義しているからnameで値とれない？
+      input.type = 'text';
+      // input.name = 'item' + j + '_' + i;
+      input.name = 'item' + j;
+      items.appendChild(input);
     }
   }
 

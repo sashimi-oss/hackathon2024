@@ -25,28 +25,29 @@ def enq_list(request):
   }
   return render(request, 'enq/enq_list.html', params)
 
+
 def create(request, enq_id):
   if request.method == 'POST':
     print('---------------------------------createのPOST-aaaa-----------------------------------------')
 
     posted_question = request.POST.get('question')
-    posted_format = request.POST.get('format')
+    posted_format = int(request.POST.get('format'))
+    print('posted_format', posted_format)
     order_no = request.POST.get('order_no')
-    if posted_format:
-      posted_format = int(posted_format)
-    
-    item1 = request.POST.get('item1')
-    item2 = request.POST.get('item2')
-    item3 = request.POST.get('item3')
-    item4 = request.POST.get('item4')
-    item5 = request.POST.get('item5')
-    item6 = request.POST.get('item6')
-    item7 = request.POST.get('item7')
-    
+
 
     # DBに登録する処理
-    item = Item.objects.create(item1=item1, item2=item2, item3=item3, item4=item4, item5=item5, item6=item6, item7=item7)
-    Question.objects.create(question=posted_question, format_id=Format(format_id = posted_format), order_no=order_no, enq_id_id=enq_id, item=item)
+    question = Question.objects.create(question=posted_question, format_id=posted_format, order_no=order_no, enq_id=enq_id)
+    
+    if posted_format == 1:
+      for i in range(1, 6):
+        item = request.POST.get(f'item{i}')
+        Item.objects.create(question=question, item=item)
+    elif posted_format == 2:
+      for i in range(1, 8):
+        item = request.POST.get(f'item{i}')
+        Item.objects.create(question=question, item=item)
+
     
     redirect_url = reverse('enq:create', args=[enq_id])
     return redirect(redirect_url)
@@ -69,6 +70,7 @@ def create(request, enq_id):
   
   return render(request, 'enq/create.html', params)
 
+
 @csrf_exempt
 def answer(request, enq_id):
   if request.method=='POST':
@@ -87,6 +89,7 @@ def answer(request, enq_id):
 
   #dbから取得
   question = Question.objects.filter(enq_id=enq_id).order_by('order_no')
+  print(question.items.all())
 
   #paramsで辞書渡す
   params = {

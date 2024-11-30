@@ -13,23 +13,14 @@
       <option value="2">選択(3択以上)</option>
       <option value="3">自由記述</option>
     </select>
-    <br><div id="sd"></div>
-    </label>
-    <!-- <input type="text" name="item1">
-    <input type="text" name="item2">
-    <input type="text" name="item3">
-     -->
-    <!-- <select name="test">
-      <option value="1" selected>選択2択</option>
-      <option value="2">選択3択</option>
-      <option value="3">自由記述</option> 
-
-    </select> -->
+  </label>
+  <br><div id="sd"></div>
     <label>順番<span>*</span>: <input type="number" name="order_no"/></label><br />
     <button id="submit" type="submit">登録</button>
     </form>
   </div>
 
+  <a href="{% url 'enq:answer' enq_id %}">アンケートを実施</a>
   <table>
     <tr>
       <th id="questionLabel">質問</th>

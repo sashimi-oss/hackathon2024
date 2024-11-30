@@ -4,8 +4,12 @@
 
 
 {% for que in question %}
-<p>{{que.question}}  /  {{que.format_id_id}}  /  {{que.order_no}}  /  {{que.item.item1}}</p>
+<p>{{que.question}}  /  {{que.format_id}}  /  {{que.order_no}}  /  {{que.item.item1}}</p>
 {% endfor %}
+{% for que in question %}
+<p>{{que.item_set.all}}</p>
+{% endfor %}
+
 
 <div class="display"></div>
 
