@@ -1,0 +1,63 @@
+{% extends 'enq/base.html' %}
+{% block content %}
+<h1>answer</h1>
+
+
+{% for que in question %}
+<p>{{que.question}}  /  {{que.format_id_id}}  /  {{que.order_no}}</p>
+{% endfor %}
+
+<div class="display"></div>
+
+<script>
+  const display = document.getElementsByClassName('display')[0];
+  let formatId = {{question.0.format_id_id | safe}};
+  let formatArray = [];
+{% for que in question %}
+  formatArray.push({{que.format_id_id}})
+{% endfor %}
+console.log(formatArray);
+
+  document.write(formatId);
+  
+  // form を動的に生成
+  let form = document.createElement('form');
+  form.action = "{# url 'enq:check' enq_id #}"
+  form.method = "POST"
+  let input_data = document.createElement('input');
+  let input_data2 = document.createElement('input');
+  let input_data3 = document.createElement('input');
+  
+  switch (formatId){
+    case 1:
+      input_data.type = 'radio';
+      input_data2.type = 'radio';
+      input_data.name = 'radio1';
+      input_data2.name = 'radio1';
+      form.appendChild(input_data)
+      form.appendChild(input_data2)
+      break;
+    case 2:
+      input_data.type = 'radio';
+      input_data2.type = 'radio';
+      input_data3.type = 'radio';
+      input_data.name = 'radio2';
+      input_data2.name = 'radio2';
+      input_data3.name = 'radio2';
+      form.appendChild(input_data)
+      form.appendChild(input_data2)
+      form.appendChild(input_data3)
+      break;
+    case 3:
+      input_data.type = 'text';
+      form.appendChild(input_data)
+      break;
+    default:
+      console.log('default');
+  }
+
+
+  display.appendChild(form)
+
+</script>
+{% endblock %}

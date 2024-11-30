@@ -1,0 +1,15 @@
+{% extends 'enq/base.html' %}
+{% block content %}
+<form action="{% url 'enq:enq_list' %}" method="post">
+  {% csrf_token %}
+  <label>アンケートタイトル<input type="text" name="title"></label>
+  <button type="submit">新規作成</button>
+</form>
+<h3>アンケートリスト</h3>
+<p>for文で表示予定、formタグでgetでenq_idを送信予定</p>
+<ul>
+{% for enq in enquetes %}
+  <li><a href="{% url 'enq:create' enq.enq_id %}">{{enq.title}}</a></li>
+{% endfor %}
+</ul>
+{% endblock %}
