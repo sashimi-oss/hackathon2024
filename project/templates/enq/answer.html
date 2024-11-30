@@ -4,7 +4,7 @@
 
 
 {% for que in question %}
-<p>{{que.question}}  /  {{que.format_id_id}}  /  {{que.order_no}}</p>
+<p>{{que.question}}  /  {{que.format_id_id}}  /  {{que.order_no}}  /  {{que.item.item1}}</p>
 {% endfor %}
 
 <div class="display"></div>
@@ -13,51 +13,50 @@
   const display = document.getElementsByClassName('display')[0];
   let formatId = {{question.0.format_id_id | safe}};
   let formatArray = [];
-{% for que in question %}
-  formatArray.push({{que.format_id_id}})
-{% endfor %}
-console.log(formatArray);
-
-  document.write(formatId);
-  
   // form を動的に生成
   let form = document.createElement('form');
-  form.action = "{# url 'enq:check' enq_id #}"
-  form.method = "POST"
-  let input_data = document.createElement('input');
-  let input_data2 = document.createElement('input');
-  let input_data3 = document.createElement('input');
-  
-  switch (formatId){
+  form.insertAdjacentHTML('afterbegin', `{% csrf_token %}`);
+
+
+  form.action = "{% url 'enq:answer' enq_id %}"
+  form.method = "POST";
+  let cnt = 0;
+
+{% for que in question %}
+  cnt++;
+  formatArray.push({{que.format_id_id}});
+  switch ({{que.format_id_id}}){
     case 1:
-      input_data.type = 'radio';
-      input_data2.type = 'radio';
-      input_data.name = 'radio1';
-      input_data2.name = 'radio1';
-      form.appendChild(input_data)
-      form.appendChild(input_data2)
+      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item1}}<input type="radio" name="ans${cnt}" value="{{que.item.item1}}"></label>`);
+      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item2}}<input type="radio" name="ans${cnt}" value="{{que.item.item2}}"></label>`);
+      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item3}}<input type="radio" name="ans${cnt}" value="{{que.item.item3}}"></label>`);
+      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item4}}<input type="radio" name="ans${cnt}" value="{{que.item.item4}}"></label>`);
+      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item5}}<input type="radio" name="ans${cnt}" value="{{que.item.item5}}"></label><br/>`);
+      form.insertAdjacentHTML('beforeend', `<input type="hidden" name="question_id${cnt}" value="{{que.question_id}}">`);
       break;
     case 2:
-      input_data.type = 'radio';
-      input_data2.type = 'radio';
-      input_data3.type = 'radio';
-      input_data.name = 'radio2';
-      input_data2.name = 'radio2';
-      input_data3.name = 'radio2';
-      form.appendChild(input_data)
-      form.appendChild(input_data2)
-      form.appendChild(input_data3)
+      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item1}}<input type="radio" name="ans${cnt}" value="{{que.item.item1}}"></label>`);
+      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item2}}<input type="radio" name="ans${cnt}" value="{{que.item.item2}}"></label>`);
+      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item3}}<input type="radio" name="ans${cnt}" value="{{que.item.item3}}"></label>`);
+      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item4}}<input type="radio" name="ans${cnt}" value="{{que.item.item4}}"></label>`);
+      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item5}}<input type="radio" name="ans${cnt}" value="{{que.item.item5}}"></label>`);
+      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item6}}<input type="radio" name="ans${cnt}" value="{{que.item.item6}}"></label>`);
+      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item7}}<input type="radio" name="ans${cnt}" value="{{que.item.item7}}"></label><br/>`);
+      form.insertAdjacentHTML('beforeend', `<input type="hidden" name="question_id${cnt}" value="{{que.question_id}}">`);
       break;
     case 3:
-      input_data.type = 'text';
-      form.appendChild(input_data)
+      form.insertAdjacentHTML('beforeend', `<input type="text" name="ans${cnt}" value=""><br/>`);
+      form.insertAdjacentHTML('beforeend', `<input type="hidden" name="question_id${cnt}" value="{{que.question_id}}">`);
       break;
     default:
       console.log('default');
   }
 
-
-  display.appendChild(form)
+{% endfor %}
+console.log(formatArray);
+form.insertAdjacentHTML('beforeend', `<input type="hidden" name="cnt" value="${cnt}">`)
+form.insertAdjacentHTML('beforeend', `<input type="submit" value="送信">`)
+display.appendChild(form);
 
 </script>
 {% endblock %}

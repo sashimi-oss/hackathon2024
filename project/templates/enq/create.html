@@ -8,13 +8,17 @@
       {% csrf_token %}
     <label>質問<span>*</span>: <input type="text" name="question" /></label><br>
     <label>形式<span>*</span>:
-    <select name="format">
-      <option value="1" selected>選択(2択)</option>
+    <select id="format" name="format" onchange="selectDetail()">
+      <option value="1">選択(2択)</option>
       <option value="2">選択(3択以上)</option>
       <option value="3">自由記述</option>
     </select>
+    <br><div id="sd"></div>
     </label>
-    
+    <!-- <input type="text" name="item1">
+    <input type="text" name="item2">
+    <input type="text" name="item3">
+     -->
     <!-- <select name="test">
       <option value="1" selected>選択2択</option>
       <option value="2">選択3択</option>

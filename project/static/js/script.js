@@ -66,7 +66,34 @@ submit.addEventListener('click', () => {
 });
 
 // 形式を選択した際に起こる処理
+var i = 1;
 function selectDetail() {
-  if (document.getElementById('format').value == '選択(2択)') {
+  console.log('detail-------------------------------');
+  const items = document.getElementById('sd');
+  if (items.hasChildNodes()) {
+    for (let i = items.childNodes.length - 1; i >= 0; i--) {
+      items.removeChild(items.childNodes[i]);
+    }
   }
+
+  //console.log(document.getElementById('format').value);
+  if (document.getElementById('format').value == '1') {
+    for (let j = 1; j <= 5; j++) {
+      const answer_item = document.createElement('input');
+      answer_item.type = 'text';
+      answer_item.name = 'answer_item' + j + '_' + i;
+      items.appendChild(answer_item);
+    }
+  }
+
+  if (document.getElementById('format').value == '2') {
+    for (let j = 1; j <= 7; j++) {
+      const answer_item = document.createElement('input');
+      answer_item.type = 'text';
+      answer_item.name = 'answer_item' + j + '_' + i;
+      items.appendChild(answer_item);
+    }
+  }
+
+  i++;
 }
