@@ -38,6 +38,7 @@ def create(request, enq_id):
 
     # DBに登録する処理
     question = Question.objects.create(question=posted_question, format_id=posted_format, order_no=order_no, enq_id=enq_id)
+    # question = Question.objects.create(question=posted_question, format_id=Format(fomat_id=posted_format), order_no=order_no, enq_id=enq_id)
     
     if posted_format == 1:
       for i in range(1, 6):
@@ -87,13 +88,20 @@ def answer(request, enq_id):
     redirect_url = reverse('enq:end', args=[enq_id])
     return redirect(redirect_url) 
 
+  print('----------------answer GET------------------------')
   #dbから取得
   question = Question.objects.filter(enq_id=enq_id).order_by('order_no')
-  print(question.items.all())
+  print('question[0].__dict__', question[0].__dict__)
+  print('question[0].items.all()', question[0].items.all())
+  print('question[0].items.all()[0]', question[0].items.all()[0])
+  items = Item.objects.order_by('item_id').all()
+  item = question[0].items.all()
 
   #paramsで辞書渡す
   params = {
     'question':question,
+    'item':item,
+    'items':items,
     'enq_id':enq_id,
   }
   

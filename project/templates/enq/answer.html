@@ -4,18 +4,20 @@
 
 
 {% for que in question %}
-<p>{{que.question}}  /  {{que.format_id}}  /  {{que.order_no}}  /  {{que.item.item1}}</p>
+<p>{{que.question}}  /  {{que.format_id}}  /  {{que.order_no}}  </p>
 {% endfor %}
-{% for que in question %}
-<p>{{que.item_set.all}}</p>
+{% for i in items %}
+<p>{{i.item}}</p>
 {% endfor %}
+
+{{items.0}}
 
 
 <div class="display"></div>
 
 <script>
   const display = document.getElementsByClassName('display')[0];
-  let formatId = {{question.0.format_id_id | safe}};
+  let formatId = {{question.0.format_id | safe}};
   let formatArray = [];
   // form を動的に生成
   let form = document.createElement('form');
@@ -28,8 +30,8 @@
 
 {% for que in question %}
   cnt++;
-  formatArray.push({{que.format_id_id}});
-  switch ({{que.format_id_id}}){
+  formatArray.push({{que.format_id}});
+  switch ({{que.format_id}}){
     case 1:
       form.insertAdjacentHTML('beforeend', `<label>{{que.item.item1}}<input type="radio" name="ans${cnt}" value="{{que.item.item1}}"></label>`);
       form.insertAdjacentHTML('beforeend', `<label>{{que.item.item2}}<input type="radio" name="ans${cnt}" value="{{que.item.item2}}"></label>`);
