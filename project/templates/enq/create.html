@@ -9,8 +9,8 @@
     <label>質問<span>*</span>: <input type="text" name="question" /></label><br>
     <label>形式<span>*</span>:
     <select id="format" name="format" onchange="selectDetail()">
-      <option value="1">選択(2択)</option>
-      <option value="2">選択(3択以上)</option>
+      <option value="1">選択(５段階評価)</option>
+      <option value="2">選択(７段階評価)</option>
       <option value="3">自由記述</option>
     </select>
   </label>
@@ -32,6 +32,12 @@
       <td>{{que.question}}</td>
       <td>{{que.format_id.format}}</td>
       <td>{{que.order_no}}</td>
+      <td>
+      <form action="{% url 'enq:question_delete' enq_id que.question_id %}" method="post">
+        {% csrf_token %}
+        <input type="submit" value="削除">
+      </form>
+    </td>
     </tr>
     {% endfor %}
   </table>

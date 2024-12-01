@@ -73,6 +73,19 @@ def create(request, enq_id):
 
 
 @csrf_exempt
+def question_delete(request, question_id, enq_id):
+  if request.method == 'POST':
+    print('-----------------delete------------')
+    question = Question.objects.filter(question_id=question_id)
+    # print(enq_id)
+    question.delete()
+
+    redirect_url = reverse('enq:create', args=[enq_id])
+    return redirect(redirect_url)
+
+
+
+@csrf_exempt
 def answer(request, enq_id):
   if request.method=='POST':
     print('---------------answer POST -----------------------------')

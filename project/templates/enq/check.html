@@ -2,11 +2,6 @@
 {% block content %}
 
 <h3>アンケート結果</h3>
-<p>{{question}}</p>
-
-{% for que in question %}
-  <p>{{que.question}}  /  {{que.question_id}}  /  {{que.answers.all}}</p>
-{% endfor %}
 
 {% for que in question %}
   <h3>質問：{{que.question}}</h3>
