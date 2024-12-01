@@ -41,8 +41,9 @@ class Item(models.Model):
 
 class Answer(models.Model):
   answer_id = models.AutoField(primary_key=True)
-  question = models.ForeignKey(Question, on_delete=models.CASCADE)
+  question = models.ForeignKey(Question, on_delete=models.CASCADE, related_name='answers')
   answer = models.TextField(max_length=300, verbose_name='アンケート結果', null=True, blank=True)
+  enq = models.ForeignKey(Enquete, on_delete=models.CASCADE, default=0)
   
   def __str__(self):
     return self.answer[:50]

@@ -34,18 +34,20 @@
       form.insertAdjacentHTML('beforeend', `{{que.question}}<br>`);
       {% for item in que.items.all %}
         form.insertAdjacentHTML('beforeend', `<label><input type="radio" name="ans${cnt}" value="{{item}}" />{{item}}</label>`);
+        form.insertAdjacentHTML('beforeend', `<input type="hidden" name="que_id${cnt}" value="{{que.question_id}}" />`);
       {% endfor %}
-      form.insertAdjacentHTML('beforeend', `<input type="hidden" name="que_id${cnt}" value="1" />`);
       form.insertAdjacentHTML('beforeend', `<br>`);
       break;
     case 2:
+      form.insertAdjacentHTML('beforeend', `{{que.question}}<br>`);
       {% for item in que.items.all %}
         form.insertAdjacentHTML('beforeend', `<label><input type="radio" name="ans${cnt}" value="{{item}}">{{item}}</label>`);
-        form.insertAdjacentHTML('beforeend', `<input type="hidden" name="que_id${cnt}" value="{{que.question_id}}" />`)
+        form.insertAdjacentHTML('beforeend', `<input type="hidden" name="que_id${cnt}" value="{{que.question_id}}" />`);
       {% endfor %}
       form.insertAdjacentHTML('beforeend', `<br>`);
       break;
     case 3:
+      form.insertAdjacentHTML('beforeend', `{{que.question}}<br>`);
       form.insertAdjacentHTML('beforeend', `<input type="text" name="ans${cnt}" value=""><br/>`);
       form.insertAdjacentHTML('beforeend', `<input type="hidden" name="que_id${cnt}" value="{{que.question_id}}">`);
       break;

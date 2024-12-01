@@ -83,7 +83,7 @@ def answer(request, enq_id):
       print(ans)
       question_id = request.POST.get(f'que_id{i}')
       print(question_id)#値とれない　というか、nameがque_id1とかじゃなくなぜかcntになってる
-      # Answer.objects.create(question_id=question_id, answer=ans)
+      Answer.objects.create(question_id=question_id, answer=ans, enq_id=enq_id)
     # print(radio1Ans)
     # Answer.objects.create(answer=radio1Ans)
     # Question.objects.update_or_create(enq_id=enq_id, defaults={'answer':Answer(answer=radio1Ans)})
@@ -96,7 +96,7 @@ def answer(request, enq_id):
   question = Question.objects.filter(enq_id=enq_id).order_by('order_no')
   print('question[0].__dict__', question[0].__dict__)
   print('question[0].items.all()', question[0].items.all())
-  print('question[0].items.all()[0]', question[0].items.all()[0])
+  # print('question[0].items.all()[0]', question[0].items.all()[0])
   items = Item.objects.order_by('item_id').all()
   item = question[0].items.all()
 
@@ -117,7 +117,13 @@ def end(request):
 def check(request, enq_id):
 
 
+
+  print('----------------------check GET------------------------')
   #dbから取得
   question = Question.objects.filter(enq_id=enq_id).order_by('order_no')
+
+  params = {
+    'question':question,
+  }
   
-  return render(request, 'enq/check.html')
+  return render(request, 'enq/check.html', params)
