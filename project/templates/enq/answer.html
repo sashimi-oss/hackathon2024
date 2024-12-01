@@ -4,13 +4,11 @@
 
 
 {% for que in question %}
-<p>{{que.question}}  /  {{que.format_id}}  /  {{que.order_no}}  </p>
-{% endfor %}
-{% for i in items %}
-<p>{{i.item}}</p>
+<p>{{que.question}}  /  {{que.question_id}}  /  {{que.format_id}}  /  {{que.order_no}}  /  {{que.items.all}}</p>
 {% endfor %}
 
-{{items.0}}
+
+
 
 
 <div class="display"></div>
@@ -27,39 +25,36 @@
   form.action = "{% url 'enq:answer' enq_id %}"
   form.method = "POST";
   let cnt = 0;
+  let ancItem = '';
 
 {% for que in question %}
-  cnt++;
-  formatArray.push({{que.format_id}});
+  // formatArray.push({{que.format_id}});
   switch ({{que.format_id}}){
     case 1:
-      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item1}}<input type="radio" name="ans${cnt}" value="{{que.item.item1}}"></label>`);
-      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item2}}<input type="radio" name="ans${cnt}" value="{{que.item.item2}}"></label>`);
-      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item3}}<input type="radio" name="ans${cnt}" value="{{que.item.item3}}"></label>`);
-      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item4}}<input type="radio" name="ans${cnt}" value="{{que.item.item4}}"></label>`);
-      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item5}}<input type="radio" name="ans${cnt}" value="{{que.item.item5}}"></label><br/>`);
-      form.insertAdjacentHTML('beforeend', `<input type="hidden" name="question_id${cnt}" value="{{que.question_id}}">`);
+      form.insertAdjacentHTML('beforeend', `{{que.question}}<br>`);
+      {% for item in que.items.all %}
+        form.insertAdjacentHTML('beforeend', `<label><input type="radio" name="ans${cnt}" value="{{item}}" />{{item}}</label>`);
+      {% endfor %}
+      form.insertAdjacentHTML('beforeend', `<input type="hidden" name="que_id${cnt}" value="1" />`);
+      form.insertAdjacentHTML('beforeend', `<br>`);
       break;
     case 2:
-      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item1}}<input type="radio" name="ans${cnt}" value="{{que.item.item1}}"></label>`);
-      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item2}}<input type="radio" name="ans${cnt}" value="{{que.item.item2}}"></label>`);
-      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item3}}<input type="radio" name="ans${cnt}" value="{{que.item.item3}}"></label>`);
-      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item4}}<input type="radio" name="ans${cnt}" value="{{que.item.item4}}"></label>`);
-      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item5}}<input type="radio" name="ans${cnt}" value="{{que.item.item5}}"></label>`);
-      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item6}}<input type="radio" name="ans${cnt}" value="{{que.item.item6}}"></label>`);
-      form.insertAdjacentHTML('beforeend', `<label>{{que.item.item7}}<input type="radio" name="ans${cnt}" value="{{que.item.item7}}"></label><br/>`);
-      form.insertAdjacentHTML('beforeend', `<input type="hidden" name="question_id${cnt}" value="{{que.question_id}}">`);
+      {% for item in que.items.all %}
+        form.insertAdjacentHTML('beforeend', `<label><input type="radio" name="ans${cnt}" value="{{item}}">{{item}}</label>`);
+        form.insertAdjacentHTML('beforeend', `<input type="hidden" name="que_id${cnt}" value="{{que.question_id}}" />`)
+      {% endfor %}
+      form.insertAdjacentHTML('beforeend', `<br>`);
       break;
     case 3:
       form.insertAdjacentHTML('beforeend', `<input type="text" name="ans${cnt}" value=""><br/>`);
-      form.insertAdjacentHTML('beforeend', `<input type="hidden" name="question_id${cnt}" value="{{que.question_id}}">`);
+      form.insertAdjacentHTML('beforeend', `<input type="hidden" name="que_id${cnt}" value="{{que.question_id}}">`);
       break;
     default:
       console.log('default');
   }
-
+  cnt++;
 {% endfor %}
-console.log(formatArray);
+// console.log(formatArray);
 form.insertAdjacentHTML('beforeend', `<input type="hidden" name="cnt" value="${cnt}">`)
 form.insertAdjacentHTML('beforeend', `<input type="submit" value="送信">`)
 display.appendChild(form);

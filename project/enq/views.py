@@ -75,18 +75,21 @@ def create(request, enq_id):
 @csrf_exempt
 def answer(request, enq_id):
   if request.method=='POST':
-    cnt = request.POST.get('cnt')
-    for i in cnt:
+    print('---------------answer POST -----------------------------')
+    cnt = int(request.POST.get('cnt'))
+    for i in range(0, cnt): #0スタート
+      print(i)
       ans = request.POST.get(f'ans{i}')
-      question_id = request.POST.get(f'question_id{i}')
-      Question.objects.update_or_create(id=question_id, defaults={'answer':ans})
+      print(ans)
+      question_id = request.POST.get(f'que_id{i}')
+      print(question_id)#値とれない　というか、nameがque_id1とかじゃなくなぜかcntになってる
+      # Answer.objects.create(question_id=question_id, answer=ans)
     # print(radio1Ans)
-
     # Answer.objects.create(answer=radio1Ans)
     # Question.objects.update_or_create(enq_id=enq_id, defaults={'answer':Answer(answer=radio1Ans)})
 
-    redirect_url = reverse('enq:end', args=[enq_id])
-    return redirect(redirect_url) 
+    # redirect_url = reverse('enq:end', args=[enq_id])
+    return redirect('enq:end') 
 
   print('----------------answer GET------------------------')
   #dbから取得
@@ -96,6 +99,7 @@ def answer(request, enq_id):
   print('question[0].items.all()[0]', question[0].items.all()[0])
   items = Item.objects.order_by('item_id').all()
   item = question[0].items.all()
+
 
   #paramsで辞書渡す
   params = {
